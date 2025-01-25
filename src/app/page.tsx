@@ -1,8 +1,9 @@
 import MarqueeList from "@/components/commons/marque-list";
+import SectionTwoLayout from "@/components/dashboard/section-trends-news/section-two-layout";
 
 export default function Home() {
   return (
-    <div className=" w-full space-y-4">
+    <div className=" w-full space-y-6">
       <div className="w-full overflow-hidden h-34">
         <MarqueeList />
       </div>
@@ -16,10 +17,7 @@ export default function Home() {
         </p>
       </div>
 
-      
-
-
-
+      <SectionTwoLayout />
     </div>
   );
 }

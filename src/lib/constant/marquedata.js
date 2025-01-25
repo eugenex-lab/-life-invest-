@@ -56,3 +56,46 @@ export const data = [
     isProfit: false,
   },
 ];
+
+export const stocks = [
+  {
+    name: "Apple Inc.",
+    logo: "https://images.pexels.com/photos/8185623/pexels-photo-8185623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ticker: "AAPL",
+    price: "$174.55",
+    change: 1.23,
+    positive: true,
+  },
+  {
+    name: "Microsoft Corporation",
+    ticker: "MSFT",
+    price: "$348.10",
+    change: 2.45,
+    positive: true,
+    logo: "https://images.pexels.com/photos/8185623/pexels-photo-8185623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  },
+  {
+    name: "Amazon.com, Inc.",
+    ticker: "AMZN",
+    price: "$3,200.00",
+    change: -15.67,
+    positive: false,
+    logo: "https://images.pexels.com/photos/8185623/pexels-photo-8185623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  },
+  {
+    name: "Tesla, Inc.",
+    ticker: "TSLA",
+    price: "$720.50",
+    change: 5.12,
+    positive: true,
+    logo: "https://images.pexels.com/photos/8185623/pexels-photo-8185623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  },
+  {
+    name: "Alphabet Inc. (Google)",
+    ticker: "GOOGL",
+    price: "$2,850.00",
+    change: -10.25,
+    positive: false,
+    logo: "https://images.pexels.com/photos/8185623/pexels-photo-8185623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  },
+];

@@ -69,7 +69,7 @@ const MarqueeStockList: React.FC = () => {
           {error ? (
             <div className="text-red-500 text-center">{error}</div>
           ) : (
-            stockData.map((item, index) => (
+            stockData.map((item) => (
               <Card
                 key={item.ticker} // Use a unique key based on ticker
                 className="flex-shrink-0 w-80 flex flex-col justify-between shadow-md rounded-xl p-0 border-0 mx-1"
@@ -111,12 +111,20 @@ const MarqueeStockList: React.FC = () => {
                     </div>
                   </CardDescription>
                 </CardHeader>
+
                 <CardContent className="space-x-2">
                   <span className="text-2xl font-medium">
-                    ${item.current.toFixed(2)}
+                    {item.current !== undefined && item.current !== null
+                      ? `$${item.current.toFixed(2)}`
+                      : "N/A"}
                   </span>
                   <span className="text-xs text-gray-500">
-                    Change: ({item.percentChange.toFixed(2)}%)
+                    Change: (
+                    {item.percentChange !== undefined &&
+                    item.percentChange !== null
+                      ? `${item.percentChange.toFixed(2)}%`
+                      : "N/A"}
+                    )
                   </span>
                 </CardContent>
               </Card>
