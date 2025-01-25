@@ -1,9 +1,25 @@
-import Image from "next/image";
+import MarqueeList from "@/components/commons/marque-list";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      {/* <div>HI</div> */}
+    <div className=" w-full space-y-4">
+      <div className="w-full overflow-hidden h-34">
+        <MarqueeList />
+      </div>
+
+      <div>
+        <h1 className="text-5xl font-extrabold text-gray-800 dark:text-white">
+          Dashboard
+        </h1>
+        <p className=" text-gray-600 dark:text-gray-300">
+          Experience a new way to manage your investments
+        </p>
+      </div>
+
+      
+
+
+
     </div>
   );
 }

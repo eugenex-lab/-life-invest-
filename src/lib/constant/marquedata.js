@@ -1,0 +1,58 @@
+export const data = [
+  {
+    title: "TESLA",
+    amount: "$404.32",
+    baseAmount: "$240.94",
+    percentage: 67.81,
+    isProfit: true,
+  },
+  {
+    title: "MFTS",
+    amount: "$240.94",
+    baseAmount: "$404.32",
+    percentage: 67.81,
+    isProfit: false,
+  },
+  {
+    title: "DHL",
+    amount: "$404.32",
+    baseAmount: "$240.94",
+    percentage: 67.81,
+    isProfit: true,
+  },
+  {
+    title: "OANDO",
+    amount: "$240.94",
+    baseAmount: "$404.32",
+    percentage: 67.81,
+    isProfit: false,
+  },
+  {
+    title: "NFT",
+    amount: "$404.32",
+    baseAmount: "$240.94",
+    percentage: 67.81,
+    isProfit: true,
+  },
+  {
+    title: "GEMPAD",
+    amount: "$240.94",
+    baseAmount: "$404.32",
+    percentage: 67.81,
+    isProfit: false,
+  },
+  {
+    title: "COKE",
+    amount: "$404.32",
+    baseAmount: "$240.94",
+    percentage: 67.81,
+    isProfit: true,
+  },
+  {
+    title: "CABURY",
+    amount: "$240.94",
+    baseAmount: "$404.32",
+    percentage: 67.81,
+    isProfit: false,
+  },
+];

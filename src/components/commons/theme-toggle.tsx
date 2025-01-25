@@ -30,8 +30,8 @@ const ThemeToggle = () => {
       variant={"link"}
       className={
         theme === "dark"
-          ? "border-muted-foreground pl-2"
-          : "border-muted-foreground pl-2"
+          ? "border-muted-foreground pl-[7px]"
+          : "border-muted-foreground pl-[7px]"
       }
     >
       <Icon
