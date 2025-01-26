@@ -44,47 +44,56 @@ const TopGainers: React.FC<TopGainersProps> = ({
   price,
   change,
   positive,
-  logoUrl, // Destructure the logo URL
-  chartData, // Historical chart data
+  logoUrl,
+  chartData,
 }) => {
+  // Dynamically set the stroke color based on the `positive` prop
+  const chartStrokeColor = positive
+    ? "var(--green)" // Green for gainers
+    : "var(--destruct)"; // Red for losers
+
   return (
-    <Card className="border-border2 border-2 transition-all duration-200  dark:hover:bg-black hover:bg-foreground">
+    <Card className="border-border2 border-2 transition-all duration-200 dark:hover:bg-black hover:bg-foreground">
       <CardContent className="text-right flex flex-row justify-between p-4">
         {/* Logo Section with Avatar */}
         <div className="flex items-center">
           <Avatar className="w-12 h-12 mr-4">
-            {" "}
-            {/* Avatar container */}
             <AvatarImage
-              src={logoUrl}
+              src={
+                logoUrl && logoUrl.trim() !== "" // Check if logoUrl is not empty
+                  ? logoUrl
+                  : "https://images.unsplash.com/photo-1726502102472-2108ef2a5cae?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              }
               alt={`${name} logo`}
               onError={(e) => {
                 e.currentTarget.src =
-                  "https://img.freepik.com/premium-photo/stock-market-trading-numbers-investment-money-stocks-grow-profit-financial-profits_55997-2343.jpg?w=2000"; // Set fallback image on error
+                  "https://images.unsplash.com/photo-1726502102472-2108ef2a5cae?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"; // Fallback image on error
               }}
             />
             <AvatarFallback>
               <AvatarImage
                 src={
-                  "https://images.pexels.com/photos/8185623/pexels-photo-8185623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  "https://images.unsplash.com/photo-1726502102472-2108ef2a5cae?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 }
-                alt={`${name} logo`}
+                alt={`${name} fallback`}
               />
             </AvatarFallback>
           </Avatar>
+
           <div className="flex flex-col justify-start items-start">
             <div className="text-lg font-semibold">{name}</div>
             <h4 className="text-sm text-gray-500">{ticker}</h4>
           </div>
         </div>
 
-        <div className=" flex justify-center items-center w-full relative">
+        {/* Chart Section */}
+        <div className="hidden lg:flex justify-center items-center w-full relative">
           <ChartContainer
             config={chartConfig}
             className="w-48 h-48 flex absolute mx-auto inset-0 -top-2"
           >
             <LineChart
-              className="text-primary"
+              className=""
               accessibilityLayer
               data={chartData.map((d) => ({ close: d.close }))}
               margin={{
@@ -101,7 +110,7 @@ const TopGainers: React.FC<TopGainersProps> = ({
                 type="linear"
                 strokeWidth={2}
                 dot={false}
-                stroke="var(--color-desktop)"
+                stroke={chartStrokeColor} // Dynamic stroke color
                 activeDot={{
                   r: 6,
                 }}
@@ -110,6 +119,7 @@ const TopGainers: React.FC<TopGainersProps> = ({
           </ChartContainer>
         </div>
 
+        {/* Price and Change Section */}
         <div>
           <p className="text-lg font-bold">{price}</p>
           <span

@@ -7,7 +7,10 @@ const BASE_URL = "https://finnhub.io/api/v1/quote";
 
 const ALPHA_BASE_URL = "https://www.alphavantage.co/query";
 const ALPHA_API_KEY = "1YRHMCK6WFU5VHFC";
-const ALPHA_API_KEY_2 = "J7F1UZ71FSXA8FYL";
+const ALPHA_API_KEY_3 = "J7F1UZ71FSXA8FYL";
+const ALPHA_API_KEY_2 = "C8ZVL9ECM1XJB2BI";
+
+const ALPHA_API_KEY_5 = "V84ULFERR202Z1NE";
 
 // Define the type for stock data
 export interface StockData {
@@ -44,9 +47,9 @@ export const fetchStockData = async (
   }
 };
 
-export const fetchTopGainers = async (
+export const fetchTopGainersAndLosers = async (
   tickers: string[]
-): Promise<StockData[]> => {
+): Promise<{ gainers: StockData[]; losers: StockData[] }> => {
   try {
     const data = await Promise.all(
       tickers.map(async (ticker) => {
@@ -64,16 +67,21 @@ export const fetchTopGainers = async (
       })
     );
 
-    // Filter only gainers and sort by percentage change in descending order
+    // Filter gainers and losers
     const gainers = data
-      .filter((stock) => stock.isProfit) // Keep only stocks with positive change
+      .filter((stock) => stock.isProfit)
       .sort((a, b) => b.percentChange - a.percentChange) // Sort by percent change descending
-      .slice(0, 5); // Take the top 5
+      .slice(0, 5); // Take the top 5 gainers
 
-    return gainers;
+    const losers = data
+      .filter((stock) => !stock.isProfit)
+      .sort((a, b) => a.percentChange - b.percentChange) // Sort by percent change ascending
+      .slice(0, 5); // Take the top 5 losers
+
+    return { gainers, losers };
   } catch (error) {
     console.error("Error fetching stock data:", error);
-    throw error; // Rethrow the error for handling in the component
+    throw error;
   }
 };
 

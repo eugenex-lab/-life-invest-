@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
       "assets.aceternity.com",
       "res.cloudinary.com",
       "images.pexels.com",
+      "img.freepik.com",
+      "images.unsplash.com",
     ], // Add the domain here
   },
 };

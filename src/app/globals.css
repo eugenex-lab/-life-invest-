@@ -37,6 +37,8 @@ body {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
     --radius: 0.5rem;
+    --green: #4caf50; /* Green color */
+    --destruct: #f44336; /* Red color */
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -53,7 +55,7 @@ body {
     --muted-foreground: 240 5% 64.9%;
     --accent: 154, 78%, 45%;
     --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 62.8% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --border-2: 206, 8%, 17%;
@@ -64,6 +66,8 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --green: #4caf50; /* Green color */
+    --destruct: #f44336; /* Red color */
   }
 }
 
