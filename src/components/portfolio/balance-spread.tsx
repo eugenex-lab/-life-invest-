@@ -18,7 +18,7 @@ export function BalanceSpread() {
         <CardDescription className="text-3xl font-bold text-accent-foreground">
           $325,980<span className="text-muted">.65 </span>
         </CardDescription>
-        <CardDescription className=" flex items-start gap-1.5">
+        <CardDescription className=" flex items-center gap-1.5">
           <CardDescription className="text-sm">
             <div
               className={`inline-flex gap-2 self-end rounded p-1 ${"bg-green-100 text-green-600"}`}
