@@ -5,7 +5,6 @@ import { Card } from "../../ui/card";
 import TopTickers from "./top-tickers";
 import { useEffect, useState } from "react";
 import {
-  fetchHistoricalData,
   fetchTopGainersAndLosers,
   StockData,
   fetchStockProfile,
@@ -17,11 +16,7 @@ import NewsCard from "./news-card";
 import { newsData, tickers } from "@/lib/constant/sample";
 
 const SectionTwoLayout = () => {
-  const [stocks, setStocks] = useState<StockData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [historicalData, setHistoricalData] = useState<
-    Record<string, { date: string; close: number }[]>
-  >({});
   const [gainers, setGainers] = useState<StockData[]>([]);
   const [losers, setLosers] = useState<StockData[]>([]);
   const [profiles, setProfiles] = useState<
@@ -45,6 +40,10 @@ const SectionTwoLayout = () => {
             setGainers(gainers);
             setLosers(losers);
             setLoading(false);
+
+            console.log("Using cached data:");
+            console.log("Gainers:", gainers);
+            console.log("Losers:", losers);
             return;
           }
         }
@@ -74,67 +73,6 @@ const SectionTwoLayout = () => {
   }, []);
 
   useEffect(() => {
-    const fetchDataHistorical = async () => {
-      const cacheKey = "stocksDa";
-      const cachedData = localStorage.getItem(cacheKey);
-      const currentTime = Date.now();
-
-      if (cachedData) {
-        const { timestamp, stocks, historicalData } = JSON.parse(cachedData);
-        if (currentTime - timestamp < 3600000) {
-          // 1 hour in milliseconds
-          setStocks(stocks); // Combined list of gainers and losers
-          setHistoricalData(historicalData);
-          setLoading(false);
-          return;
-        }
-      }
-
-      try {
-        // Fetch both gainers and losers
-        const { gainers, losers } = await fetchTopGainersAndLosers(tickers);
-        const combinedStocks = [...gainers, ...losers]; // Combine gainers and losers
-        console.log("Combined Stocks for Historical Data:", combinedStocks);
-
-        setStocks(combinedStocks);
-        setGainers(gainers);
-        setLosers(losers);
-
-        // Fetch historical data for all combined stocks
-        const historicalPromises = combinedStocks.map(async (stock) => {
-          const data = await fetchHistoricalData(stock.ticker);
-          return { [stock.ticker]: data.slice(0, 10) }; // Limit to the last 10 records
-        });
-
-        const historicalResults = await Promise.all(historicalPromises);
-        const historicalMap = Object.assign({}, ...historicalResults); // Combine historical data for all stocks
-        setHistoricalData(historicalMap);
-
-        // Cache combined data and historical data
-        localStorage.setItem(
-          cacheKey,
-          JSON.stringify({
-            timestamp: currentTime,
-            stocks: combinedStocks,
-            historicalData: historicalMap,
-          })
-        );
-      } catch (error) {
-        console.error(
-          "Error fetching gainers, losers, or historical data:",
-          error
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDataHistorical();
-  }, []);
-
-  console.log("Historical Data:", historicalData);
-
-  useEffect(() => {
     const fetchProfiles = async () => {
       try {
         const cacheKey = "stockProfiles";
@@ -147,7 +85,7 @@ const SectionTwoLayout = () => {
           const isCacheValid =
             Date.now() - parseInt(cachedTimestamp, 10) < 30 * 60 * 1000; // 30 minutes
           if (isCacheValid) {
-            console.log("Using cached stock profiles");
+            // console.log("Using cached stock profiles");
             setProfiles(JSON.parse(cachedData));
             return;
           }
@@ -155,11 +93,11 @@ const SectionTwoLayout = () => {
 
         // Fetch new profiles if no valid cache
         const combinedStocks = [...gainers, ...losers];
-        console.log("Fetching profiles for stocks:", combinedStocks);
+        // console.log("Fetching profiles for stocks:", combinedStocks);
 
         const profilePromises = combinedStocks.map(async (stock) => {
           const profile = await fetchStockProfile(stock.ticker);
-          console.log(`Fetched Profile for ${stock.ticker}:`, profile);
+          // console.log(`Fetched Profile for ${stock.ticker}:`, profile);
           return { [stock.ticker]: { name: profile.name, logo: profile.logo } };
         });
 
@@ -227,7 +165,6 @@ const SectionTwoLayout = () => {
                       }`}
                       change={stock.percentChange}
                       positive={stock.isProfit}
-                      chartData={historicalData[stock.ticker] || []} // Pass historical data
                     />
                   ))
                 )}
@@ -256,7 +193,6 @@ const SectionTwoLayout = () => {
                     }`}
                     change={stock.percentChange}
                     positive={stock.isProfit}
-                    chartData={historicalData[stock.ticker] || []}
                   />
                 ))
               )}

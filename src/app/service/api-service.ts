@@ -1,21 +1,14 @@
 // services/stockApi.ts
 
-// Fetch API keys from environment variables
-const FINNHUB_API_KEY_1 = process.env.FINNHUB_API_KEY_1;
-const FINNHUB_API_KEY_2 = process.env.FINNHUB_API_KEY_2;
-const FINNHUB_API_KEY_3 = process.env.FINNHUB_API_KEY_3;
-const FINNHUB_API_KEY_4 = process.env.FINNHUB_API_KEY_4;
+// Load the environment variables from the .env file
 
-const ALPHA_API_KEY_1 = process.env.ALPHA_API_KEY_1;
-const ALPHA_API_KEY_2 = process.env.ALPHA_API_KEY_2;
-const ALPHA_API_KEY_3 = process.env.ALPHA_API_KEY_3;
-const ALPHA_API_KEY_4 = process.env.ALPHA_API_KEY_4;
-const ALPHA_API_KEY_5 = process.env.ALPHA_API_KEY_5;
+// Read the API keys from the environment variables
+const FINNHUB_API_KEY_1 = "cub71j1r01qsc2sl1sjgcub71j1r01qsc2sl1sk0";
+const FINNHUB_API_KEY_2 = "cdnv89aad3i5o5okm9l0cdnv89aad3i5o5okm9lg";
+const FINNHUB_API_KEY_3 = "cuaimt9r01qof06ikrr0cuaimt9r01qof06ikrrg";
 
-// API Base URLs
 const FINNHUB_BASE_URL = "https://finnhub.io/api/v1/quote";
 const FINNHUB_PROFILE_URL = "https://finnhub.io/api/v1/stock/profile2";
-const ALPHA_BASE_URL = "https://www.alphavantage.co/query";
 
 // Define the type for stock data
 export interface StockData {
@@ -46,10 +39,10 @@ export const fetchStockData = async (
     const data = await Promise.all(
       tickers.map(async (ticker) => {
         const response = await fetch(
-          `${FINNHUB_BASE_URL}?symbol=${ticker}&token=${FINNHUB_API_KEY_3}`
+          `${FINNHUB_BASE_URL}?symbol=${ticker}&token=${FINNHUB_API_KEY_1}`
         );
         const result = await response.json();
-        console.log(`API Response for ${ticker}:`, result); // Log the response
+        // console.log(`API Response for ${ticker}:`, result); // Log the response
 
         return {
           ticker,
@@ -63,7 +56,7 @@ export const fetchStockData = async (
     return data;
   } catch (error) {
     console.error("Error fetching stock data:", error);
-    throw error; // Rethrow the error for handling in the component
+    throw error;
   }
 };
 
@@ -97,6 +90,7 @@ export const fetchTopGainersAndLosers = async (
       .filter((stock) => !stock.isProfit)
       .sort((a, b) => a.percentChange - b.percentChange) // Sort by percent change ascending
       .slice(0, 5); // Take the top 5 losers
+    console.log("API Response for Gainers and Losers:", data);
 
     return { gainers, losers, all: data };
   } catch (error) {
@@ -105,36 +99,12 @@ export const fetchTopGainersAndLosers = async (
   }
 };
 
-export const fetchHistoricalData = async (
-  symbol: string
-): Promise<{ date: string; close: number }[]> => {
-  try {
-    const response = await fetch(
-      `${ALPHA_BASE_URL}?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${ALPHA_API_KEY_2}`
-    );
-    const result = await response.json();
-
-    if (result["Time Series (Daily)"]) {
-      const timeSeries = result["Time Series (Daily)"];
-      return Object.entries(timeSeries).map(([date, values]: any) => ({
-        date,
-        close: parseFloat(values["4. close"]),
-      }));
-    } else {
-      throw new Error("Invalid response from Alpha Vantage");
-    }
-  } catch (error) {
-    console.error("Error fetching historical data:", error);
-    throw error; // Rethrow the error for handling in the component
-  }
-};
-
 export const fetchStockProfile = async (
   symbol: string
 ): Promise<StockProfile> => {
   try {
     const response = await fetch(
-      `${FINNHUB_PROFILE_URL}?symbol=${symbol}&token=${FINNHUB_API_KEY}`
+      `${FINNHUB_PROFILE_URL}?symbol=${symbol}&token=${FINNHUB_API_KEY_3}`
     );
     const result = await response.json();
 

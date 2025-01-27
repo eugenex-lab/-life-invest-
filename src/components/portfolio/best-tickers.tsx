@@ -13,7 +13,6 @@ interface TopGainersProps {
   change: number;
   positive: boolean;
   logoUrl: string; // New prop for the logo URL
-  chartData: { close: number }[]; // Historical chart data
 }
 
 // const chartData = [

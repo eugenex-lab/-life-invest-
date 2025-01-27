@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  fetchHistoricalData,
   fetchStockProfile,
   fetchTopGainersAndLosers,
   StockData,
@@ -15,9 +14,7 @@ import BestTickers from "./best-tickers";
 const SectionTheeLayout = () => {
   const [stocks, setStocks] = useState<StockData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [historicalData, setHistoricalData] = useState<
-    Record<string, { date: string; close: number }[]>
-  >({});
+
   const [gainers, setGainers] = useState<StockData[]>([]);
   const [profiles, setProfiles] = useState<
     Record<string, { name: string; logo: string }>
@@ -73,11 +70,10 @@ const SectionTheeLayout = () => {
       const currentTime = Date.now();
 
       if (cachedData) {
-        const { timestamp, stocks, historicalData } = JSON.parse(cachedData);
+        const { timestamp, stocks } = JSON.parse(cachedData);
         if (currentTime - timestamp < 3600000) {
           // 1 hour in milliseconds
           setStocks(stocks); // Combined list of gainers and losers
-          setHistoricalData(historicalData);
           setLoading(false);
           return;
         }
@@ -87,20 +83,12 @@ const SectionTheeLayout = () => {
         // Fetch both gainers and losers
         const { gainers, losers } = await fetchTopGainersAndLosers(tickers);
         const combinedStocks = [...gainers, ...losers]; // Combine gainers and losers
-        console.log("Combined Stocks for Historical Data:", combinedStocks);
+        // console.log("Combined Stocks for Historical Data:", combinedStocks);
 
         setStocks(combinedStocks);
         setGainers(gainers);
 
         // Fetch historical data for all combined stocks
-        const historicalPromises = combinedStocks.map(async (stock) => {
-          const data = await fetchHistoricalData(stock.ticker);
-          return { [stock.ticker]: data.slice(0, 10) }; // Limit to the last 10 records
-        });
-
-        const historicalResults = await Promise.all(historicalPromises);
-        const historicalMap = Object.assign({}, ...historicalResults); // Combine historical data for all stocks
-        setHistoricalData(historicalMap);
 
         // Cache combined data and historical data
         localStorage.setItem(
@@ -108,7 +96,6 @@ const SectionTheeLayout = () => {
           JSON.stringify({
             timestamp: currentTime,
             stocks: combinedStocks,
-            historicalData: historicalMap,
           })
         );
       } catch (error) {
@@ -124,8 +111,6 @@ const SectionTheeLayout = () => {
     fetchDataHistorical();
   }, []);
 
-  console.log("Historical Data:", historicalData);
-
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
@@ -139,7 +124,7 @@ const SectionTheeLayout = () => {
           const isCacheValid =
             Date.now() - parseInt(cachedTimestamp, 10) < 30 * 60 * 1000; // 30 minutes
           if (isCacheValid) {
-            console.log("Using cached stock profiles");
+            // console.log("Using cached stock profiles");
             setProfiles(JSON.parse(cachedData));
             return;
           }
@@ -147,11 +132,11 @@ const SectionTheeLayout = () => {
 
         // Fetch new profiles if no valid cache
         const combinedStocks = [...gainers];
-        console.log("Fetching profiles for stocks:", combinedStocks);
+        // console.log("Fetching profiles for stocks:", combinedStocks);
 
         const profilePromises = combinedStocks.map(async (stock) => {
           const profile = await fetchStockProfile(stock.ticker);
-          console.log(`Fetched Profile for ${stock.ticker}:`, profile);
+          // console.log(`Fetched Profile for ${stock.ticker}:`, profile);
           return { [stock.ticker]: { name: profile.name, logo: profile.logo } };
         });
 
@@ -163,7 +148,7 @@ const SectionTheeLayout = () => {
         localStorage.setItem(cacheKey, JSON.stringify(profileMap));
         localStorage.setItem(cacheTimestampKey, Date.now().toString());
 
-        console.log("Profile Map:", profileMap);
+        // console.log("Profile Map:", profileMap);
       } catch (error) {
         console.error("Error fetching stock profiles:", error);
       }
@@ -202,7 +187,6 @@ const SectionTheeLayout = () => {
                 }`}
                 change={stock.percentChange}
                 positive={stock.isProfit}
-                chartData={historicalData[stock.ticker] || []}
               />
             ))
           )}

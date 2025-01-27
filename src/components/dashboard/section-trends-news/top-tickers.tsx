@@ -5,14 +5,6 @@ import { Card, CardContent } from "../../ui/card";
 import { ArrowUp, ArrowDown } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "../../ui/avatar"; // Import Avatar components
 
-import { Line, LineChart } from "recharts";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "../../ui/chart";
-
 interface TopGainersProps {
   name: string;
   ticker: string;
@@ -20,7 +12,6 @@ interface TopGainersProps {
   change: number;
   positive: boolean;
   logoUrl: string; // New prop for the logo URL
-  chartData: { close: number }[]; // Historical chart data
 }
 
 // const chartData = [
@@ -31,12 +22,6 @@ interface TopGainersProps {
 //   { desktop: 209 },
 //   { desktop: 214 },
 // ];
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-} satisfies ChartConfig;
 
 const TopTickers: React.FC<TopGainersProps> = ({
   name,
@@ -45,12 +30,8 @@ const TopTickers: React.FC<TopGainersProps> = ({
   change,
   positive,
   logoUrl,
-  chartData,
 }) => {
   // Dynamically set tsearche stroke color based on the `positive` prop
-  const chartStrokeColor = positive
-    ? "var(--green)" // Green for gainers
-    : "var(--destruct)"; // Red for losers
 
   return (
     <Card className="border-border2 border-2 transition-all duration-200 dark:hover:bg-black hover:bg-foreground">
@@ -90,37 +71,6 @@ const TopTickers: React.FC<TopGainersProps> = ({
         </div>
 
         {/* Chart Section */}
-        <div className="hidden xl:flex justify-center items-center w-full relative">
-          <ChartContainer
-            config={chartConfig}
-            className="w-48 h-48 flex absolute mx-auto inset-0 -top-2"
-          >
-            <LineChart
-              className=""
-              accessibilityLayer
-              data={chartData.map((d) => ({ close: d.close }))}
-              margin={{
-                left: 12,
-                right: 12,
-              }}
-            >
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent className="" />}
-              />
-              <Line
-                dataKey="close"
-                type="linear"
-                strokeWidth={2}
-                dot={false}
-                stroke={chartStrokeColor} // Dynamic stroke color
-                activeDot={{
-                  r: 6,
-                }}
-              />
-            </LineChart>
-          </ChartContainer>
-        </div>
 
         {/* Price and Change Section */}
         <div>
