@@ -2,7 +2,6 @@
 import React from "react";
 import MarqueeList from "@/components/commons/marque-list";
 import SectionTwoLayout from "@/components/portfolio/section-two-layout";
-import PortfoiloListSection from "@/components/portfolio/portfolio-list-section";
 import SectionTheeLayout from "@/components/portfolio/section-three-layout";
 
 const PortfolioPage = () => (

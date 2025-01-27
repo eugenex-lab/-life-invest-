@@ -1,20 +1,21 @@
 // services/stockApi.ts
 
-const FINNHUB_API_KEY = "cub71j1r01qsc2sl1sjgcub71j1r01qsc2sl1sk0";
-const FINNHUB_API_KEY_2 = "cdnv89aad3i5o5okm9l0cdnv89aad3i5o5okm9lg";
-const FINNHUB_API_KEY_3 = "tomos95104@kurbieh.com";
-const FINNHUB_API_KEY_4 = "cuaimt9r01qof06ikrr0cuaimt9r01qof06ikrrg";
+// Fetch API keys from environment variables
+const FINNHUB_API_KEY_1 = process.env.FINNHUB_API_KEY_1;
+const FINNHUB_API_KEY_2 = process.env.FINNHUB_API_KEY_2;
+const FINNHUB_API_KEY_3 = process.env.FINNHUB_API_KEY_3;
+const FINNHUB_API_KEY_4 = process.env.FINNHUB_API_KEY_4;
 
+const ALPHA_API_KEY_1 = process.env.ALPHA_API_KEY_1;
+const ALPHA_API_KEY_2 = process.env.ALPHA_API_KEY_2;
+const ALPHA_API_KEY_3 = process.env.ALPHA_API_KEY_3;
+const ALPHA_API_KEY_4 = process.env.ALPHA_API_KEY_4;
+const ALPHA_API_KEY_5 = process.env.ALPHA_API_KEY_5;
+
+// API Base URLs
 const FINNHUB_BASE_URL = "https://finnhub.io/api/v1/quote";
 const FINNHUB_PROFILE_URL = "https://finnhub.io/api/v1/stock/profile2";
-
 const ALPHA_BASE_URL = "https://www.alphavantage.co/query";
-const ALPHA_API_KEY = "1YRHMCK6WFU5VHFC";
-const ALPHA_API_KEY_2 = "J7F1UZ71FSXA8FYL";
-const ALPHA_API_KEY_3 = "5DCWJC1IF9XA03R6";
-const ALPHA_API_KEY_4 = "C8ZVL9ECM1XJB2BI";
-
-const ALPHA_API_KEY_5 = "V84ULFERR202Z1NE";
 
 // Define the type for stock data
 export interface StockData {
@@ -45,7 +46,7 @@ export const fetchStockData = async (
     const data = await Promise.all(
       tickers.map(async (ticker) => {
         const response = await fetch(
-          `${FINNHUB_BASE_URL}?symbol=${ticker}&token=${FINNHUB_API_KEY_4}`
+          `${FINNHUB_BASE_URL}?symbol=${ticker}&token=${FINNHUB_API_KEY_3}`
         );
         const result = await response.json();
         console.log(`API Response for ${ticker}:`, result); // Log the response
