@@ -1,11 +1,9 @@
-// services/stockApi.ts
+import dotenv from "dotenv";
+dotenv.config();
 
-// Load the environment variables from the .env file
-
-// Read the API keys from the environment variables
-const FINNHUB_API_KEY_1 = "cub71j1r01qsc2sl1sjgcub71j1r01qsc2sl1sk0";
-const FINNHUB_API_KEY_2 = "cdnv89aad3i5o5okm9l0cdnv89aad3i5o5okm9lg";
-const FINNHUB_API_KEY_3 = "cuaimt9r01qof06ikrr0cuaimt9r01qof06ikrrg";
+console.log("FINNHUB_API_KEY_1:", process.env.FINNHUB_API_KEY_1);
+console.log("FINNHUB_API_KEY_2:", process.env.FINNHUB_API_KEY_2);
+console.log("FINNHUB_API_KEY_3:", process.env.FINNHUB_API_KEY_3);
 
 const FINNHUB_BASE_URL = "https://finnhub.io/api/v1/quote";
 const FINNHUB_PROFILE_URL = "https://finnhub.io/api/v1/stock/profile2";
@@ -39,7 +37,7 @@ export const fetchStockData = async (
     const data = await Promise.all(
       tickers.map(async (ticker) => {
         const response = await fetch(
-          `${FINNHUB_BASE_URL}?symbol=${ticker}&token=${FINNHUB_API_KEY_1}`
+          `${FINNHUB_BASE_URL}?symbol=${ticker}&token=${process.env.FINNHUB_API_KEY_1}`
         );
         const result = await response.json();
         // console.log(`API Response for ${ticker}:`, result); // Log the response
@@ -67,7 +65,7 @@ export const fetchTopGainersAndLosers = async (
     const data = await Promise.all(
       tickers.map(async (ticker) => {
         const response = await fetch(
-          `${FINNHUB_BASE_URL}?symbol=${ticker}&token=${FINNHUB_API_KEY_2}`
+          `${FINNHUB_BASE_URL}?symbol=${ticker}&token=${process.env.FINNHUB_API_KEY_2}`
         );
         const result = await response.json();
         return {
@@ -104,7 +102,7 @@ export const fetchStockProfile = async (
 ): Promise<StockProfile> => {
   try {
     const response = await fetch(
-      `${FINNHUB_PROFILE_URL}?symbol=${symbol}&token=${FINNHUB_API_KEY_3}`
+      `${FINNHUB_PROFILE_URL}?symbol=${symbol}&token=${process.env.FINNHUB_API_KEY_3}`
     );
     const result = await response.json();
 
