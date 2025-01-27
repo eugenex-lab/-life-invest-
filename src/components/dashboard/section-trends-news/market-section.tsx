@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "../../ui/card";
 import TopTickersSkeleton from "./top-tickers-skeleton";
 import {
@@ -13,13 +13,20 @@ import { Button } from "../../ui/button";
 import { tickers } from "@/lib/constant/sample";
 import MarketTickersTable from "./market-tickers";
 
-// Utility to fetch stock and profile data
+interface StockProfile {
+  name: string;
+  logo: string;
+  marketCap: string;
+  sector: string;
+}
+
+type Profiles = Record<string, StockProfile>; // Define a type for profiles
+
 const fetchStockBySymbol = async (symbol: string) => {
   try {
     const stockData = await fetchStockData([symbol]);
     const stockProfile = await fetchStockProfile(symbol);
 
-    // Check for "Unknown" values in profile data
     if (
       !stockProfile.name ||
       stockProfile.name === "Unknown" ||
@@ -47,22 +54,17 @@ const fetchStockBySymbol = async (symbol: string) => {
 };
 
 const MarketSection = () => {
-  // State for search query, dynamically fetched stocks, and profiles
   const [search, setSearch] = useState("");
   const [stocks, setStocks] = useState<StockData[]>([]);
-  const [profiles, setProfiles] = useState<Record<string, any>>({});
+  const [profiles, setProfiles] = useState<Profiles>({}); // Set the correct type
   const [loading, setLoading] = useState(false);
-  const [isDefault, setIsDefault] = useState(true); // Tracks whether to show default data
-  const [searchError, setSearchError] = useState(false); // Tracks whether the search resulted in no results
+  const [isDefault, setIsDefault] = useState(true);
+  const [searchError, setSearchError] = useState(false);
 
-  // Default stocks and profiles
   const [defaultStocks, setDefaultStocks] = useState<StockData[]>([]);
-  const [defaultProfiles, setDefaultProfiles] = useState<Record<string, any>>(
-    {}
-  );
+  const [defaultProfiles, setDefaultProfiles] = useState<Profiles>({}); // Set the correct type
 
-  // Fetch default stock data on mount
-  useState(() => {
+  useEffect(() => {
     const fetchDefaults = async () => {
       setLoading(true);
       try {
@@ -71,7 +73,7 @@ const MarketSection = () => {
           tickers.map((ticker) => fetchStockProfile(ticker))
         );
 
-        const profiles = profileData.reduce((acc, profile) => {
+        const profiles = profileData.reduce<Profiles>((acc, profile) => {
           acc[profile.ticker] = {
             name: profile.name,
             logo: profile.logo,
@@ -91,14 +93,13 @@ const MarketSection = () => {
     };
 
     fetchDefaults();
-  }, []);
+  }, []); // Only pass an empty array as the second argument
 
-  // Handle search functionality
   const handleSearch = async () => {
-    if (!search.trim()) return; // Prevent empty searches
+    if (!search.trim()) return;
 
     setLoading(true);
-    setSearchError(false); // Reset error state before searching
+    setSearchError(false);
     try {
       const symbol = search.toUpperCase();
 
@@ -111,7 +112,7 @@ const MarketSection = () => {
         setProfiles(defaultProfiles);
 
         if (filteredStocks.length === 0) {
-          setSearchError(true); // No match found
+          setSearchError(true);
         }
       } else {
         const { stock, profile } = await fetchStockBySymbol(symbol);
@@ -120,31 +121,29 @@ const MarketSection = () => {
           setStocks([stock]);
           setProfiles(profile);
         } else {
-          setSearchError(true); // No valid stock or profile found
+          setSearchError(true);
         }
       }
 
-      setIsDefault(false); // Switch to non-default view
+      setIsDefault(false);
     } catch (error) {
       console.error("Search failed:", error);
-      setSearchError(true); // Handle failed search
+      setSearchError(true);
       setStocks([]);
       setProfiles({});
     } finally {
-      setLoading(false); // Stop loading spinner
+      setLoading(false);
     }
   };
 
-  // Reset to default stocks
   const handleReset = () => {
     setSearch("");
     setStocks([]);
     setProfiles({});
     setIsDefault(true);
-    setSearchError(false); // Clear error state
+    setSearchError(false);
   };
 
-  // Stocks and profiles to display
   const stocksToDisplay = isDefault ? defaultStocks : stocks;
   const profilesToDisplay = isDefault ? defaultProfiles : profiles;
 
@@ -152,7 +151,6 @@ const MarketSection = () => {
     <div className="flex w-full">
       <Card className="p-6 w-full">
         <div>
-          {/* Header Section */}
           <div className="flex justify-between items-center w-full pb-4 pt-1 flex-wrap gap-4">
             <h2 className="text-xl font-bold">Markets</h2>
             <div className="flex items-center space-x-2 wrap">
@@ -182,7 +180,6 @@ const MarketSection = () => {
             </div>
           </div>
 
-          {/* Table, Loading Skeleton, or Empty Message */}
           <div className="space-y-1 lg:max-h-96 overflow-y-scroll min-h-[100px]">
             {loading ? (
               <TopTickersSkeleton items={5} />

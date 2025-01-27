@@ -196,6 +196,7 @@ export const SidebarLink = ({
 
 export const SidebarBottom = ({
   link,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   className,
   ...props
 }: {

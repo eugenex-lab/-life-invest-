@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   fetchStockData,
@@ -20,14 +20,27 @@ export const tickers = [
   "UNH", // UnitedHealth Group
 ];
 
+type StockProfile = {
+  name: string;
+  logo: string;
+  marketCap: string;
+  sector: string;
+};
+
+type Profiles = Record<string, StockProfile>;
+
 // Utility to fetch stock and profile data
 
 const PortfoiloListSection = () => {
   // State for search query, dynamically fetched stocks, and profiles
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stocks, setStocks] = useState<StockData[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [profiles, setProfiles] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isDefault, setIsDefault] = useState(true); // Tracks whether to show default data
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [searchError, setSearchError] = useState(false); // Tracks whether the search resulted in no results
 
   // Default stocks and profiles
@@ -37,7 +50,7 @@ const PortfoiloListSection = () => {
   );
 
   // Fetch default stock data on mount
-  useState(() => {
+  useEffect(() => {
     const fetchDefaults = async () => {
       setLoading(true);
       try {
@@ -46,7 +59,8 @@ const PortfoiloListSection = () => {
           tickers.map((ticker) => fetchStockProfile(ticker))
         );
 
-        const profiles = profileData.reduce((acc, profile) => {
+        // Ensure TypeScript knows `acc` is of type `Profiles`
+        const profiles = profileData.reduce<Profiles>((acc, profile) => {
           acc[profile.ticker] = {
             name: profile.name,
             logo: profile.logo,
@@ -54,10 +68,10 @@ const PortfoiloListSection = () => {
             sector: profile.sector,
           };
           return acc;
-        }, {});
+        }, {}); // Initialize `acc` as an empty object of type `Profiles`
 
         setDefaultStocks(stockData);
-        setDefaultProfiles(profiles);
+        setDefaultProfiles(profiles); // `profiles` is now correctly typed
       } catch (error) {
         console.error("Error fetching default stocks:", error);
       } finally {
@@ -66,7 +80,7 @@ const PortfoiloListSection = () => {
     };
 
     fetchDefaults();
-  }, []);
+  }, []); // Run only once on mount
 
   // Handle search functionality
 

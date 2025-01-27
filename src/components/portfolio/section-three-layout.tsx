@@ -12,7 +12,6 @@ import { Card } from "../ui/card";
 import BestTickers from "./best-tickers";
 
 const SectionTheeLayout = () => {
-  const [stocks, setStocks] = useState<StockData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const [gainers, setGainers] = useState<StockData[]>([]);
@@ -70,10 +69,9 @@ const SectionTheeLayout = () => {
       const currentTime = Date.now();
 
       if (cachedData) {
-        const { timestamp, stocks } = JSON.parse(cachedData);
+        const { timestamp } = JSON.parse(cachedData);
         if (currentTime - timestamp < 3600000) {
           // 1 hour in milliseconds
-          setStocks(stocks); // Combined list of gainers and losers
           setLoading(false);
           return;
         }
@@ -85,7 +83,6 @@ const SectionTheeLayout = () => {
         const combinedStocks = [...gainers, ...losers]; // Combine gainers and losers
         // console.log("Combined Stocks for Historical Data:", combinedStocks);
 
-        setStocks(combinedStocks);
         setGainers(gainers);
 
         // Fetch historical data for all combined stocks

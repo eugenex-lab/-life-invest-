@@ -20,7 +20,6 @@ interface TopGainersProps {
   positive: boolean;
   logoUrl: string;
   marketCap: string;
-  sector: string;
 }
 
 // Row component for a single stock
@@ -32,7 +31,6 @@ const MarketTickersRow: React.FC<TopGainersProps> = ({
   positive,
   logoUrl,
   marketCap,
-  sector,
 }) => {
   return (
     <TableRow>
@@ -153,7 +151,6 @@ const PortfolioTickersTable: React.FC<{
                   change={stock.percentChange}
                   positive={stock.isProfit}
                   marketCap={profiles[stock.ticker]?.marketCap || "N/A"}
-                  sector={profiles[stock.ticker]?.sector || "N/A"}
                 />
               ))}
         </TableBody>
