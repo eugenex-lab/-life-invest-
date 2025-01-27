@@ -38,7 +38,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const TopGainers: React.FC<TopGainersProps> = ({
+const TopTickers: React.FC<TopGainersProps> = ({
   name,
   ticker,
   price,
@@ -56,24 +56,25 @@ const TopGainers: React.FC<TopGainersProps> = ({
     <Card className="border-border2 border-2 transition-all duration-200 dark:hover:bg-black hover:bg-foreground">
       <CardContent className="text-right flex flex-row justify-between p-4">
         {/* Logo Section with Avatar */}
-        <div className="flex items-center">
-          <Avatar className="w-12 h-12 mr-4">
+        <div className="flex items-center w-full">
+          <Avatar className="w-12 h-12 mr-2 p-1.5 bg-secondary-foreground">
             <AvatarImage
+              className="rounded-full"
               src={
                 logoUrl && logoUrl.trim() !== "" // Check if logoUrl is not empty
                   ? logoUrl
-                  : "https://images.unsplash.com/photo-1726502102472-2108ef2a5cae?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  : "https://img.freepik.com/free-vector/financial-chart-globe-background-forex-trading-stock-market_1017-44838.jpg?t=st=1737928801~exp=1737932401~hmac=6ce624353995c162ea41441a00d69802349bde7e075efc4189512d98091531d2&w=2000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               }
               alt={`${name} logo`}
               onError={(e) => {
                 e.currentTarget.src =
-                  "https://images.unsplash.com/photo-1726502102472-2108ef2a5cae?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"; // Fallback image on error
+                  "https://img.freepik.com/free-vector/financial-chart-globe-background-forex-trading-stock-market_1017-44838.jpg?t=st=1737928801~exp=1737932401~hmac=6ce624353995c162ea41441a00d69802349bde7e075efc4189512d98091531d2&w=2000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"; // Fallback image on error
               }}
             />
             <AvatarFallback>
               <AvatarImage
                 src={
-                  "https://images.unsplash.com/photo-1726502102472-2108ef2a5cae?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  "https://img.freepik.com/free-vector/financial-chart-globe-background-forex-trading-stock-market_1017-44838.jpg?t=st=1737928801~exp=1737932401~hmac=6ce624353995c162ea41441a00d69802349bde7e075efc4189512d98091531d2&w=2000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 }
                 alt={`${name} fallback`}
               />
@@ -87,7 +88,7 @@ const TopGainers: React.FC<TopGainersProps> = ({
         </div>
 
         {/* Chart Section */}
-        <div className="hidden lg:flex justify-center items-center w-full relative">
+        <div className="hidden xl:flex justify-center items-center w-full relative">
           <ChartContainer
             config={chartConfig}
             className="w-48 h-48 flex absolute mx-auto inset-0 -top-2"
@@ -140,4 +141,4 @@ const TopGainers: React.FC<TopGainersProps> = ({
   );
 };
 
-export default TopGainers;
+export default TopTickers;

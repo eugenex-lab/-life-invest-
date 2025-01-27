@@ -37,7 +37,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
         </a>
 
         {/* Title and Source */}
-        <div className="flex flex-col justify-between flex-grow lg:h-[165px]">
+        <div className="flex flex-col justify-between flex-grow lg:h-[210px] xl:h-[165px] ">
           {/* Title */}
           <a
             href={url}

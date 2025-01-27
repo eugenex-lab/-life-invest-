@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SidebarLayout } from "@/components/commons/slide-bar-layout";
 import { Toaster } from "react-hot-toast";
+import { TanstackProvider } from "@/components/providers/tanstack-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,9 @@ export default function RootLayout({
       >
         <div className="flex min-h-screen">
           <Toaster />
-          <SidebarLayout>{children}</SidebarLayout>
+          <SidebarLayout>
+            <TanstackProvider>{children}</TanstackProvider>
+          </SidebarLayout>
           {/* <main className="flex-1">{children}</main> */}
         </div>
       </body>

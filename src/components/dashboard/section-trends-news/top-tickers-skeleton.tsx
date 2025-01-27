@@ -6,7 +6,7 @@ interface TopGainersSkeletonProps {
   items?: number;
 }
 
-const TopGainersSkeleton: React.FC<TopGainersSkeletonProps> = ({
+const TopTickersSkeleton: React.FC<TopGainersSkeletonProps> = ({
   items = 5,
 }) => {
   return (
@@ -26,4 +26,4 @@ const TopGainersSkeleton: React.FC<TopGainersSkeletonProps> = ({
   );
 };
 
-export default TopGainersSkeleton;
+export default TopTickersSkeleton;

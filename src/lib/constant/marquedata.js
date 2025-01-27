@@ -99,3 +99,50 @@ export const stocks = [
     logo: "https://images.pexels.com/photos/8185623/pexels-photo-8185623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
   },
 ];
+
+export const newsData = [
+  {
+    title: "Apple Hits New All-Time High Amid Market Rally",
+    imageUrl:
+      "https://images.unsplash.com/photo-1627882278815-b5fca2d24ae5?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    source: "MarketWatch",
+    url: "https://www.marketwatch.com/",
+  },
+  {
+    title: "Tesla Faces Headwinds After Earnings Miss",
+    imageUrl:
+      "https://images.unsplash.com/photo-1617704548623-340376564e68?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    source: "CNBC",
+    url: "https://www.cnbc.com/",
+  },
+  {
+    title: "Amazon's Growth Strategy: Focus on Cloud and AI",
+    imageUrl:
+      "https://images.unsplash.com/photo-1523474253046-8cd2748b5fd2?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    source: "The Verge",
+    url: "https://www.theverge.com/",
+  },
+];
+
+export const tickers = [
+  "MSFT", // Microsoft
+  "AAPL", // Apple
+  "GOOGL", // Alphabet (Google)
+  "AMZN", // Amazon
+  "NVDA", // NVIDIA
+  "META", // Meta Platforms
+  "TSLA", // Tesla
+  "V", // Visa
+  "MA", // Mastercard
+
+  // "TSM", // Taiwan Semiconductor
+  // "UNH", // UnitedHealth Group
+  // "XOM", // ExxonMobil
+  // "JPM", // JPMorgan Chase
+
+  // "WMT", // Walmart
+  // "ASML", // ASML Holding
+  // "PG", // Procter & Gamble
+  // "COST", // Costco
+  // "JNJ", // Johnson & Johnson
+];

@@ -3,63 +3,19 @@
 import SectionSubHeaders from "@/components/commons/section-subheaders";
 import { Card, CardContent } from "@/components/ui/card";
 // import { Progress } from "@/components/ui/progress";
-import TopGainers from "./top-gainer";
+import TopTickers from "./top-tickers";
 import { useEffect, useState } from "react";
 import {
   fetchHistoricalData,
   fetchTopGainersAndLosers,
   StockData,
+  fetchStockProfile,
 } from "@/app/service/api-service";
-import TopGainersSkeleton from "./top-gainer-skeleton";
+import TopGainersSkeleton from "./top-tickers-skeleton";
 // import CustomScroller from "react-custom-scroller";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import NewsCard from "./news-card";
-const tickers = [
-  "AAPL", // Apple
-  "MSFT", // Microsoft
-  "GOOGL", // Alphabet (Google)
-  "AMZN", // Amazon
-  "META", // Meta Platforms (Facebook)
-  "GOOG", // Alphabet Class C
-  "SHOP", // Shopify
-  "COST", // Costco
-  "PEP", // PepsiCo
-  "ADBE", // Adobe
-  "CSCO", // Cisco
-  "ABBV", // AbbVie
-  "CRM", // Salesforce
-  "UBER", // Uber
-  "JNJ", // Johnson & Johnson
-  "ORCL", // Oracle (replaces Netflix)
-  "NVCR", // NovoCure (replaces Tesla)
-  "AMD", // Advanced Micro Devices
-  "BMY", // Bristol Myers Squibb (replaces Intel)
-  "QCOM", // Qualcomm (replaces NVIDIA)
-];
-
-const newsData = [
-  {
-    title: "Apple Hits New All-Time High Amid Market Rally",
-    imageUrl:
-      "https://images.unsplash.com/photo-1627882278815-b5fca2d24ae5?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    source: "MarketWatch",
-    url: "https://www.marketwatch.com/",
-  },
-  {
-    title: "Tesla Faces Headwinds After Earnings Miss",
-    imageUrl:
-      "https://images.unsplash.com/photo-1617704548623-340376564e68?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    source: "CNBC",
-    url: "https://www.cnbc.com/",
-  },
-  {
-    title: "Amazon's Growth Strategy: Focus on Cloud and AI",
-    imageUrl:
-      "https://images.unsplash.com/photo-1523474253046-8cd2748b5fd2?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    source: "The Verge",
-    url: "https://www.theverge.com/",
-  },
-];
+import { newsData, tickers } from "@/lib/constant/marquedata";
 
 const SectionTwoLayout = () => {
   const [stocks, setStocks] = useState<StockData[]>([]);
@@ -69,6 +25,9 @@ const SectionTwoLayout = () => {
   >({});
   const [gainers, setGainers] = useState<StockData[]>([]);
   const [losers, setLosers] = useState<StockData[]>([]);
+  const [profiles, setProfiles] = useState<
+    Record<string, { name: string; logo: string }>
+  >({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -176,8 +135,54 @@ const SectionTwoLayout = () => {
 
   console.log("Historical Data:", historicalData);
 
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      try {
+        const cacheKey = "stockProfiles";
+        const cacheTimestampKey = "stockProfilesTimestamp";
+        const cachedData = localStorage.getItem(cacheKey);
+        const cachedTimestamp = localStorage.getItem(cacheTimestampKey);
+
+        // Check if cache exists and is less than 30 minutes old
+        if (cachedData && cachedTimestamp) {
+          const isCacheValid =
+            Date.now() - parseInt(cachedTimestamp, 10) < 30 * 60 * 1000; // 30 minutes
+          if (isCacheValid) {
+            console.log("Using cached stock profiles");
+            setProfiles(JSON.parse(cachedData));
+            return;
+          }
+        }
+
+        // Fetch new profiles if no valid cache
+        const combinedStocks = [...gainers, ...losers];
+        console.log("Fetching profiles for stocks:", combinedStocks);
+
+        const profilePromises = combinedStocks.map(async (stock) => {
+          const profile = await fetchStockProfile(stock.ticker);
+          console.log(`Fetched Profile for ${stock.ticker}:`, profile);
+          return { [stock.ticker]: { name: profile.name, logo: profile.logo } };
+        });
+
+        const profileResults = await Promise.all(profilePromises);
+        const profileMap = Object.assign({}, ...profileResults);
+
+        // Save profiles to state and cache
+        setProfiles(profileMap);
+        localStorage.setItem(cacheKey, JSON.stringify(profileMap));
+        localStorage.setItem(cacheTimestampKey, Date.now().toString());
+
+        console.log("Profile Map:", profileMap);
+      } catch (error) {
+        console.error("Error fetching stock profiles:", error);
+      }
+    };
+
+    if (gainers.length || losers.length) fetchProfiles();
+  }, [gainers, losers]);
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-4">
       {/* Top Tokens Section */}
       <Card className="p-6">
         <Tabs defaultValue="top-gainers" className="">
@@ -208,15 +213,14 @@ const SectionTwoLayout = () => {
                   <TopGainersSkeleton items={3} />
                 ) : (
                   gainers.map((stock, index) => (
-                    <TopGainers
+                    <TopTickers
                       key={index}
                       logoUrl={
-                        stock.ticker
-                          ? `https://logo.clearbit.com/${stock.ticker.toLowerCase()}.com`
-                          : "https://images.unsplash.com/photo-1726502102472-2108ef2a5cae?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        profiles[stock.ticker]?.logo ||
+                        "https://img.freepik.com/free-vector/financial-chart-globe-background-forex-trading-stock-market_1017-44838.jpg?t=st=1737928801~exp=1737932401~hmac=6ce624353995c162ea41441a00d69802349bde7e075efc4189512d98091531d2&w=2000"
                       }
-                      name={stock.ticker} // Replace with company name if available
-                      ticker={stock.ticker}
+                      ticker={profiles[stock.ticker]?.name || stock.ticker}
+                      name={stock.ticker}
                       price={`$${
                         stock.current !== undefined && stock.current !== null
                           ? stock.current.toFixed(2)
@@ -232,34 +236,31 @@ const SectionTwoLayout = () => {
             </div>
           </TabsContent>
 
-          <TabsContent value="top-losers" className="">
-            <div className="lg:max-h-80 overflow-y-scroll">
-              <div className="space-y-1">
-                {loading ? (
-                  <TopGainersSkeleton items={3} />
-                ) : (
-                  losers.map((stock, index) => (
-                    <TopGainers
-                      key={index}
-                      logoUrl={
-                        stock.ticker
-                          ? `https://logo.clearbit.com/${stock.ticker.toLowerCase()}.com`
-                          : "https://img.freepik.com/premium-photo/stock-market-trading-numbers-investment-money-stocks-grow-profit-financial-profits_55997-2343.jpg?w=2000"
-                      }
-                      name={stock.ticker} // Replace with company name if available
-                      ticker={stock.ticker}
-                      price={`$${
-                        stock.current !== undefined && stock.current !== null
-                          ? stock.current.toFixed(2)
-                          : "N/A"
-                      }`}
-                      change={stock.percentChange}
-                      positive={stock.isProfit}
-                      chartData={historicalData[stock.ticker] || []} // Use historical data for this stock
-                    />
-                  ))
-                )}
-              </div>
+          <TabsContent value="top-losers">
+            <div className="lg:max-h-[26rem]  overflow-y-scroll space-y-1">
+              {loading ? (
+                <TopGainersSkeleton items={3} />
+              ) : (
+                losers.map((stock, index) => (
+                  <TopTickers
+                    key={index}
+                    logoUrl={
+                      profiles[stock.ticker]?.logo ||
+                      "https://img.freepik.com/free-vector/financial-chart-globe-background-forex-trading-stock-market_1017-44838.jpg?t=st=1737928801~exp=1737932401~hmac=6ce624353995c162ea41441a00d69802349bde7e075efc4189512d98091531d2&w=2000"
+                    }
+                    ticker={profiles[stock.ticker]?.name || stock.ticker}
+                    name={stock.ticker}
+                    price={`$${
+                      stock.current !== undefined && stock.current !== null
+                        ? stock.current.toFixed(2)
+                        : "N/A"
+                    }`}
+                    change={stock.percentChange}
+                    positive={stock.isProfit}
+                    chartData={historicalData[stock.ticker] || []}
+                  />
+                ))
+              )}
             </div>
           </TabsContent>
         </Tabs>{" "}
