@@ -1,6 +1,5 @@
 import SectionTwoLayout from "@/components/dashboard/section-trends-news/section-two-layout";
 import MarqueeList from "../components/commons/marque-list";
-import MarketSection from "../components/dashboard/section-trends-news/market-section";
 
 export default function Home() {
   return (
@@ -19,8 +18,6 @@ export default function Home() {
       </div>
 
       <SectionTwoLayout />
-
-      <MarketSection />
     </div>
   );
 }

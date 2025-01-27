@@ -135,7 +135,7 @@ export const tickers = [
   "V", // Visa
   // "MA", // Mastercard
 
-  "TSM", // Taiwan Semiconductor
+  "WMT", // Taiwan Semiconductor
   "UNH", // UnitedHealth Group
   // "XOM", // ExxonMobil
   "JPM", // JPMorgan Chase
@@ -145,6 +145,16 @@ export const tickers = [
   // "PG", // Procter & Gamble
   // "COST", // Costco
   // "JNJ", // Johnson & Johnson
+];
+
+export const myTickers = [
+  "MSFT", // Microsoft
+
+  "AMZN", // Amazon
+
+  "WMT", // Taiwan Semiconductor
+  "UNH", // UnitedHealth Group
+  "XOM", // ExxonMobil
 ];
 
 export const chartData = [
