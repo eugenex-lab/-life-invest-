@@ -129,15 +129,15 @@ export const tickers = [
   "AAPL", // Apple
   "GOOGL", // Alphabet (Google)
   "AMZN", // Amazon
-  "NVDA", // NVIDIA
+  // "NVDA", // NVIDIA
   "META", // Meta Platforms
   "TSLA", // Tesla
   "V", // Visa
-  "MA", // Mastercard
+  // "MA", // Mastercard
 
   "TSM", // Taiwan Semiconductor
   "UNH", // UnitedHealth Group
-  "XOM", // ExxonMobil
+  // "XOM", // ExxonMobil
   "JPM", // JPMorgan Chase
 
   // "WMT", // Walmart
@@ -145,4 +145,85 @@ export const tickers = [
   // "PG", // Procter & Gamble
   // "COST", // Costco
   // "JNJ", // Johnson & Johnson
+];
+
+export const chartData = [
+  {
+    date: "2024-01-01",
+    stocks: 211887.42,
+    bonds: 81495.16,
+    mutualFunds: 32598.06,
+  },
+  {
+    date: "2024-02-01",
+    stocks: 218000.0 + Math.random() * 5000,
+    bonds: 82000.0 + Math.random() * 1000,
+    mutualFunds: 33000.0 + Math.random() * 500,
+  },
+  {
+    date: "2024-03-01",
+    stocks: 225000.0 + Math.random() * 5000,
+    bonds: 83000.0 + Math.random() * 1000,
+    mutualFunds: 34000.0 + Math.random() * 500,
+  },
+  {
+    date: "2024-04-01",
+    stocks: 232000.0 + Math.random() * 5000,
+    bonds: 84000.0 + Math.random() * 1000,
+    mutualFunds: 35000.0 + Math.random() * 500,
+  },
+  {
+    date: "2024-05-01",
+    stocks: 240000.0 + Math.random() * 5000,
+    bonds: 85000.0 + Math.random() * 1000,
+    mutualFunds: 36000.0 + Math.random() * 500,
+  },
+  {
+    date: "2024-06-01",
+    stocks: 248000.0 + Math.random() * 5000,
+    bonds: 86000.0 + Math.random() * 1000,
+    mutualFunds: 37000.0 + Math.random() * 500,
+  },
+  {
+    date: "2024-07-01",
+    stocks: 256000.0 + Math.random() * 5000,
+    bonds: 87000.0 + Math.random() * 1000,
+    mutualFunds: 38000.0 + Math.random() * 500,
+  },
+  {
+    date: "2024-08-01",
+    stocks: 264000.0 + Math.random() * 5000,
+    bonds: 88000.0 + Math.random() * 1000,
+    mutualFunds: 39000.0 + Math.random() * 500,
+  },
+  {
+    date: "2024-09-01",
+    stocks: 272000.0 + Math.random() * 5000,
+    bonds: 89000.0 + Math.random() * 1000,
+    mutualFunds: 40000.0 + Math.random() * 500,
+  },
+  {
+    date: "2024-10-01",
+    stocks: 280000.0 + Math.random() * 5000,
+    bonds: 90000.0 + Math.random() * 1000,
+    mutualFunds: 41000.0 + Math.random() * 500,
+  },
+  {
+    date: "2024-11-01",
+    stocks: 288000.0 + Math.random() * 5000,
+    bonds: 91000.0 + Math.random() * 1000,
+    mutualFunds: 42000.0 + Math.random() * 500,
+  },
+  {
+    date: "2024-12-01",
+    stocks: 296000.0 + Math.random() * 5000,
+    bonds: 92000.0 + Math.random() * 1000,
+    mutualFunds: 43000.0 + Math.random() * 500,
+  },
+  {
+    date: "2025-01-01",
+    stocks: 304000.0 + Math.random() * 5000,
+    bonds: 93000.0 + Math.random() * 1000,
+    mutualFunds: 44000.0 + Math.random() * 500,
+  },
 ];

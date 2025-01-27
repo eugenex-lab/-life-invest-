@@ -10,7 +10,7 @@ import {
 } from "@/app/service/api-service";
 import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
-import { tickers } from "@/lib/constant/marquedata";
+import { tickers } from "@/lib/constant/sample";
 import MarketTickersTable from "./market-tickers";
 
 // Utility to fetch stock and profile data

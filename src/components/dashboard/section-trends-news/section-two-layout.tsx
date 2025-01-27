@@ -14,7 +14,7 @@ import TopGainersSkeleton from "./top-tickers-skeleton";
 // import CustomScroller from "react-custom-scroller";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
 import NewsCard from "./news-card";
-import { newsData, tickers } from "@/lib/constant/marquedata";
+import { newsData, tickers } from "@/lib/constant/sample";
 
 const SectionTwoLayout = () => {
   const [stocks, setStocks] = useState<StockData[]>([]);
@@ -181,7 +181,7 @@ const SectionTwoLayout = () => {
   }, [gainers, losers]);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
       {/* Top Tokens Section */}
       <Card className="p-6">
         <Tabs defaultValue="top-gainers" className="">
