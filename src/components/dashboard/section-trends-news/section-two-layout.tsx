@@ -41,9 +41,9 @@ const SectionTwoLayout = () => {
             setLosers(losers);
             setLoading(false);
 
-            console.log("Using cached data:");
-            console.log("Gainers:", gainers);
-            console.log("Losers:", losers);
+            // console.log("Using cached data:");
+            // console.log("Gainers:", gainers);
+            // console.log("Losers:", losers);
             return;
           }
         }

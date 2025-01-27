@@ -1,10 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-console.log("FINNHUB_API_KEY_1:", process.env.FINNHUB_API_KEY_1);
-console.log("FINNHUB_API_KEY_2:", process.env.FINNHUB_API_KEY_2);
-console.log("FINNHUB_API_KEY_3:", process.env.FINNHUB_API_KEY_3);
-
 const FINNHUB_BASE_URL = "https://finnhub.io/api/v1/quote";
 const FINNHUB_PROFILE_URL = "https://finnhub.io/api/v1/stock/profile2";
 
@@ -37,7 +33,7 @@ export const fetchStockData = async (
     const data = await Promise.all(
       tickers.map(async (ticker) => {
         const response = await fetch(
-          `${FINNHUB_BASE_URL}?symbol=${ticker}&token=${process.env.FINNHUB_API_KEY_1}`
+          `${FINNHUB_BASE_URL}?symbol=${ticker}&token=${process.env.NEXT_PUBLIC_FINNHUB_API_KEY_1}`
         );
         const result = await response.json();
         // console.log(`API Response for ${ticker}:`, result); // Log the response
@@ -65,7 +61,7 @@ export const fetchTopGainersAndLosers = async (
     const data = await Promise.all(
       tickers.map(async (ticker) => {
         const response = await fetch(
-          `${FINNHUB_BASE_URL}?symbol=${ticker}&token=${process.env.FINNHUB_API_KEY_2}`
+          `${FINNHUB_BASE_URL}?symbol=${ticker}&token=${process.env.NEXT_PUBLIC_FINNHUB_API_KEY_2}`
         );
         const result = await response.json();
         return {
@@ -88,7 +84,7 @@ export const fetchTopGainersAndLosers = async (
       .filter((stock) => !stock.isProfit)
       .sort((a, b) => a.percentChange - b.percentChange) // Sort by percent change ascending
       .slice(0, 5); // Take the top 5 losers
-    console.log("API Response for Gainers and Losers:", data);
+    // console.log("API Response for Gainers and Losers:", data);
 
     return { gainers, losers, all: data };
   } catch (error) {
@@ -102,7 +98,7 @@ export const fetchStockProfile = async (
 ): Promise<StockProfile> => {
   try {
     const response = await fetch(
-      `${FINNHUB_PROFILE_URL}?symbol=${symbol}&token=${process.env.FINNHUB_API_KEY_3}`
+      `${FINNHUB_PROFILE_URL}?symbol=${symbol}&token=${process.env.NEXT_PUBLIC_FINNHUB_API_KEY_3}`
     );
     const result = await response.json();
 
