@@ -143,8 +143,8 @@ const SectionTwoLayout = () => {
               Top Losers
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="top-gainers" className="pt-3">
-            <div className="lg:max-h-80 overflow-y-scroll">
+          <TabsContent value="top-gainers" className="pt-3  ">
+            <div className="lg:max-h-[23rem] overflow-y-scroll">
               <div className="space-y-1">
                 {loading ? (
                   <TopGainersSkeleton items={3} />
@@ -172,8 +172,8 @@ const SectionTwoLayout = () => {
             </div>
           </TabsContent>
 
-          <TabsContent value="top-losers">
-            <div className="lg:max-h-[26rem]  overflow-y-scroll space-y-1">
+          <TabsContent value="top-losers" className="pt-3  ">
+            <div className="lg:max-h-[23rem]  overflow-y-scroll space-y-1">
               {loading ? (
                 <TopGainersSkeleton items={3} />
               ) : (
