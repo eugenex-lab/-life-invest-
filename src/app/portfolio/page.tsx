@@ -5,7 +5,7 @@ import SectionTwoLayout from "@/components/portfolio/section-two-layout";
 import SectionTheeLayout from "@/components/portfolio/section-three-layout";
 
 const PortfolioPage = () => (
-  <div className=" w-full space-y-6">
+  <div className=" w-full space-y-4">
     <div className="w-full overflow-hidden h-34">
       <MarqueeList />
     </div>

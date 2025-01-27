@@ -155,7 +155,7 @@ const SectionTheeLayout = () => {
   }, [gainers]);
 
   return (
-    <div className="flex gap-4 pt-4 flex-wrap lg:flex-nowrap">
+    <div className="flex gap-4  flex-wrap lg:flex-nowrap">
       {/* Top Tokens Section */}
 
       <PortfoiloListSection />

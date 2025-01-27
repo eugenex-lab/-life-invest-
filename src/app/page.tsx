@@ -4,7 +4,7 @@ import MarketSection from "@/components/dashboard/section-trends-news/market-sec
 
 export default function Home() {
   return (
-    <div className=" w-full space-y-6">
+    <div className=" w-full space-y-4">
       <div className="w-full overflow-hidden h-34">
         <MarqueeList />
       </div>
