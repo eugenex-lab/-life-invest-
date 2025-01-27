@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "../../ui/card";
 import { ArrowUp, ArrowDown } from "lucide-react";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"; // Import Avatar components
+import { Avatar, AvatarImage, AvatarFallback } from "../../ui/avatar"; // Import Avatar components
 
 import { Line, LineChart } from "recharts";
 import {
@@ -11,7 +11,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "../../ui/chart";
 
 interface TopGainersProps {
   name: string;
@@ -47,7 +47,7 @@ const TopTickers: React.FC<TopGainersProps> = ({
   logoUrl,
   chartData,
 }) => {
-  // Dynamically set the stroke color based on the `positive` prop
+  // Dynamically set tsearche stroke color based on the `positive` prop
   const chartStrokeColor = positive
     ? "var(--green)" // Green for gainers
     : "var(--destruct)"; // Red for losers

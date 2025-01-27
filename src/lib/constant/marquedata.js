@@ -135,10 +135,10 @@ export const tickers = [
   "V", // Visa
   "MA", // Mastercard
 
-  // "TSM", // Taiwan Semiconductor
-  // "UNH", // UnitedHealth Group
-  // "XOM", // ExxonMobil
-  // "JPM", // JPMorgan Chase
+  "TSM", // Taiwan Semiconductor
+  "UNH", // UnitedHealth Group
+  "XOM", // ExxonMobil
+  "JPM", // JPMorgan Chase
 
   // "WMT", // Walmart
   // "ASML", // ASML Holding

@@ -1,7 +1,6 @@
 "use client";
 
-import SectionSubHeaders from "@/components/commons/section-subheaders";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "../../ui/card";
 // import { Progress } from "@/components/ui/progress";
 import TopTickers from "./top-tickers";
 import { useEffect, useState } from "react";
@@ -13,7 +12,7 @@ import {
 } from "@/app/service/api-service";
 import TopGainersSkeleton from "./top-tickers-skeleton";
 // import CustomScroller from "react-custom-scroller";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
 import NewsCard from "./news-card";
 import { newsData, tickers } from "@/lib/constant/marquedata";
 

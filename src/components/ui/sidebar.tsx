@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -212,7 +212,7 @@ export const SidebarBottom = ({
           display: animate ? (open ? "inline-block" : "none") : "inline-block",
           opacity: animate ? (open ? 1 : 0) : 1,
         }}
-        className="text-neutral-700 dark:text-neutral-175 text-sm group-hover/sidebar:translate-x-1 group-hover/sidebar:text-accent transition duration-175 whitespace-pre inline-block !p-0 !m-0 "
+        className="text-accent dark:text-accent text-sm group-hover/sidebar:translate-x-1 group-hover/sidebar:text-accent transition duration-175 whitespace-pre inline-block !p-0 !m-0 "
       >
         {link.label}
       </motion.span>

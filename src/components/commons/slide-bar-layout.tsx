@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 import {
   Sidebar,
   SidebarBody,
@@ -42,7 +42,7 @@ export function SidebarLayout({ children }: { children: React.ReactNode }) {
       )}
     >
       <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10">
+        <SidebarBody className="justify-between gap-10 fixed z-50">
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden pt-4">
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-2 justify-center ml-0.5 space-y-3">
@@ -124,8 +124,11 @@ export const LogoIcon = () => {
 const Dashboard = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex w-full overflow-hidden">
-      <div className="p-2 md:p-8   bg-white dark:bg-background flex flex-col gap-2 flex-1 w-full h-full rounded-md">
-        <div className="flex gap-2 flex-1 rounded-lg  ">{children}</div>
+      <div className="p-2 md:p-8   bg-white dark:bg-background flex flex-col gap-2 flex-1 w-full h-full rounded-md pt-0 md:pt-0">
+        s
+        <div className="flex gap-2 flex-1 rounded-lg  md:ml-[60px]">
+          {children}
+        </div>
       </div>
     </div>
   );

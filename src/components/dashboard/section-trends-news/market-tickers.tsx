@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableRow } from "../../ui/table";
+import { Avatar, AvatarImage, AvatarFallback } from "../../ui/avatar";
+import { Button } from "../../ui/button";
 import { ArrowUp, ArrowDown } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Skeleton } from "@/components/ui/skeleton";
+import { ScrollArea } from "../../ui/scroll-area";
+import { Skeleton } from "../../ui/skeleton";
 
 // Props for a single row in the table
 interface TopGainersProps {
@@ -35,9 +35,10 @@ const MarketTickersRow: React.FC<TopGainersProps> = ({
     <TableRow>
       {/* Logo and Name */}
       <TableCell className="flex items-center space-x-3">
-        <Avatar className="w-10 h-10 bg-secondary-foreground">
+        <Avatar className="w-12 h-12 bg-secondary-foreground p-1.5">
           <AvatarImage
             src={logoUrl || ""}
+            className="rounded-3xl"
             alt={`${name} logo`}
             onError={(e) => {
               e.currentTarget.src =
@@ -84,17 +85,12 @@ const MarketTickersRow: React.FC<TopGainersProps> = ({
       </TableCell>
 
       {/* Actions */}
-      <TableCell>
+      <TableCell className="">
         <div className="flex space-x-2 justify-center">
           <Button variant="mute" size="sm" className="w-24 h-8" radius={"full"}>
             + Wishlist
           </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-24 h-9 hover:bg-primary"
-            radius={"full"}
-          >
+          <Button size="sm" className="w-24 h-8 " radius={"full"}>
             View
           </Button>
         </div>
