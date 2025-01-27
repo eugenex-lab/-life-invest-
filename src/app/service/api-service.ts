@@ -1,6 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 const FINNHUB_BASE_URL = "https://finnhub.io/api/v1/quote";
 const FINNHUB_PROFILE_URL = "https://finnhub.io/api/v1/stock/profile2";
 
